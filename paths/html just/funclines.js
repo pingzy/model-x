@@ -63,7 +63,7 @@ function setter(data){
 }
 // custom updater main branch 
 // function name changed to setter to sett ...    🖤
-function setter(data){
+function sett(data){
     let ony =[] , twi =[] ,x1 , x2 , x, y , c , m , theta , flag =0 ;
     const p = 35 ;
     for (let i = 0; i < data.length-1; i++) {
