@@ -63,9 +63,9 @@ function setter(data){
 }
 // custom updater main branch 
 // function name changed to setter to sett ...    🖤
-function sett(data){
+function setter(data , p =35 ){
     let ony =[] , twi =[] ,x1 , x2 , x, y , c , m , theta , flag =0 ;
-    const p = 35 ;
+
     for (let i = 0; i < data.length-1; i++) {
         x1 = data[i].x , x2 = data[i+1].x ;
         y1 = data[i].y , y2 = data[i+1].y ;
@@ -92,5 +92,7 @@ function sett(data){
             }
             
     }
-    
+    return {ony , twi }    
 }
+
+// Next UPSS ... 🦥❤️‍🩹
