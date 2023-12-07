@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D3 Spline Example</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+  <script>
+    "use strict";
+    // Generate random points
+    var points = d3.range(6).map(function (i) {
+      return {
+        x: Math.random() * 800,
+        y: Math.random() * 600,
+        label: (i + 1).toString()
+      };
+    });
+    // Create the SVG container
+    var svg = d3.select('body').append('svg')
+      .attr('width', 800)
+      .attr('height', 600);
+    // Draw the spline
+    var line = d3.line()
+      .x(function (d) { return d.x; })
+      .y(function (d) { return d.y; })
+      .curve(d3.curveCatmullRom.alpha(0.5)); // Using Catmull-Rom spline
+    svg.append('path')
+      .datum(points)
+      .attr('fill', 'none')
+      .attr('stroke', 'steelblue')
+      .attr('stroke-width', 2)
+      .attr('d', line);
+    // Draw the points
+    svg.selectAll('circle')
+      .data(points)
+      .enter().append('circle')
+      .attr('cx', function (d) { return d.x; })
+      .attr('cy', function (d) { return d.y; })
+      .attr('r', 4)
+      .attr('fill', 'red');
+    // Label the points
+    svg.selectAll('text')
+      .data(points)
+      .enter().append('text')
+      .attr('x', function (d) { return d.x; })
+      .attr('y', function (d) { return d.y - 10; })
+      .text(function (d) { return d.label; })
+      .attr('font-family', 'sans-serif')
+      .attr('font-size', '12px')
+      .attr('fill', 'black')
+      .attr('text-anchor', 'middle');
+
+
+      // Assuming the original points array and svg container are defined as in the previous code
+
+// Function to calculate the offset points for the parallel lines
+function offsetPoints(points, distance) {
+  const offsetPoints = [];
+  
+  // Calculate the offset for each point
+  for (let i = 0; i < points.length; i++) {
+    // Calculate the direction vector and its normal
+    let dir, len, normal;
+    if (i === 0) { // First point
+      dir = { x: points[i + 1].x - points[i].x, y: points[i + 1].y - points[i].y };
+    } else if (i === points.length - 1) { // Last point
+      dir = { x: points[i].x - points[i - 1].x, y: points[i].y - points[i - 1].y };
+    } else { // Middle points
+      dir = { x: points[i + 1].x - points[i - 1].x, y: points[i + 1].y - points[i - 1].y };
+    }
+    len = Math.sqrt(dir.x * dir.x + dir.y * dir.y);
+    normal = { x: -dir.y / len, y: dir.x / len };
+    
+    // Calculate the offset points
+    offsetPoints.push({
+      x: points[i].x + distance * normal.x,
+      y: points[i].y + distance * normal.y
+    });
+  }
+  
+  return offsetPoints;
+}
+
+// Distance 'p' from the original spline
+const p = 10; // Adjust the distance as needed
+
+// Calculate the offset points for both sides of the original spline
+const leftSidePoints = offsetPoints(points, p);
+const rightSidePoints = offsetPoints(points, -p);
+
+// Draw the left side line
+svg.append('path')
+  .datum(leftSidePoints)
+  .attr('fill', 'none')
+  .attr('stroke', 'grey')
+  .attr('stroke-width', 2)
+  .attr('d', line);
+
+// Draw the right side line
+svg.append('path')
+  .datum(rightSidePoints)
+  .attr('fill', 'none')
+  .attr('stroke', 'grey')
+  .attr('stroke-width', 2)
+  .attr('d', line);
+
+  
+
+  </script>
+</body>
+</html>
+
