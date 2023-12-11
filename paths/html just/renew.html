@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="./funclines.js"></script>
   </head>
   <body>
     <script>
@@ -87,6 +88,18 @@
         .attr("fill", "none")
         .attr("stroke", "blue")
         .attr("stroke-width", "2");
+
+        let {ony} = setter(dts , 22) 
+        const le = svg
+        .append("path")
+        .datum(ony)
+        .attr("d", curves)
+        .attr("fill", "none")
+        .attr("stroke", "brown")
+        .attr("stroke-width", "2");
+
+        console.log(dts)
+        console.log(ony)
 
       document.body.appendChild(svg.node());
     </script>

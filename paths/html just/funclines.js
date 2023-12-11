@@ -45,24 +45,6 @@ function fullSet(data){
     }
 }
 
-function setter(data){
-    let ony =[] , twi =[] ,x1 , x2 , x, y , c , m , theta;
-    const p = 35 ;
-    for (let i = 0; i < data.length-1; i++) {
-        x1 = data[i].x , x2 = data[i+1].x ;
-        y1 = data[i].y , y2 = data[i+1].y ;
-            // check for left 
-            m =(y2-y1)/(x2-x1) ;
-            // y = mx + c ;  c = y -mx ;
-            c = y1 - (m * x1) ; 
-            theta = Math.atan(m)*180/Math.PI ;
-            
-            
-    }
-    
-}
-// custom updater main branch 
-// function name changed to setter to sett ...    🖤
 function setter(data , p =35 ){
     let ony =[] , twi =[] ,x1 , x2 , x, y , c , m , theta , flag =0 ;
 
@@ -76,16 +58,16 @@ function setter(data , p =35 ){
             theta = Math.atan(m)*180/Math.PI ;
             // condsidering for left side
             x = x1 -p*Math.cos(theta) , y = y1 - p*Math.sin(theta) ; 
-            ony.push[{x:x , y: y }]
+            ony.push({x:x , y: y })
             
             // now for the right side (side by side formation)
             x = x1 +p*Math.cos(theta) , y = y1 + p*Math.sin(theta) ; 
-            twi.push[{x:x , y:y}]
+            twi.push({x:x , y:y})
             if (flag!=1) {
                 x = x1 - p -p*.25 , y = y1 ;
-                ony.push[{x:x , y: y }]
+                ony.push({x:x , y: y })
                 x = x1 + p +p*.25 , y = y1 ;
-                twi.push[{x:x , y:y}] 
+                twi.push({x:x , y:y})
                 flag = 0 
             } else {
              flag = 1   
@@ -95,4 +77,39 @@ function setter(data , p =35 ){
     return {ony , twi }    
 }
 
-// Next UPSS ... 🦥❤️‍🩹
+function setter(data , p =35 ){
+    let ony =[] , twi =[] ,x1 , x2 , x, y , c , m , theta , flag =0 ;
+
+    for (let i = 0; i < data.length-1; i++) {
+        x1 = data[i].x , x2 = data[i+1].x ;
+        y1 = data[i].y , y2 = data[i+1].y ;
+            // check for left 
+            m =(y2-y1)/(x2-x1) ;
+            // y = mx + c ;  c = y -mx ;
+            c = y1 - (m * x1) ; 
+            theta = Math.atan(m)*180/Math.PI ;
+            // condsidering for left side
+            
+            if(m>0){
+                
+            }
+            
+            x = x1 -p*Math.cos(theta) , y = y1 - p*Math.sin(theta) ; 
+            ony.push({x:x , y: y })
+            
+            // now for the right side (side by side formation)
+            x = x1 +p*Math.cos(theta) , y = y1 + p*Math.sin(theta) ; 
+            twi.push({x:x , y:y})
+            if (flag!=1) {
+                x = x1 - p -p*.25 , y = y1 ;
+                ony.push({x:x , y: y })
+                x = x1 + p +p*.25 , y = y1 ;
+                twi.push({x:x , y:y})
+                flag = 0 
+            } else {
+             flag = 1   
+            }
+            
+    }
+    return {ony , twi }    
+}

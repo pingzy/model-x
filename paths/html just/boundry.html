@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 Parallel Splines with Even Distance</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <svg id="chart"></svg>
+
+    <script>
+        // Define input data points
+        const points = [
+            { x: 10, y: 10 },
+            { x: 20, y: 20 },
+            { x: 30, y: 30 },
+            { x: 40, y: 40 },
+        ];
+
+        // Function to calculate offset points for parallel lines with even distance
+        function calculateOffsetPoints(points, distance) {
+            const offsetPoints = [];
+            const directionVector = { x: -points[0].y, y: points[0].x };
+
+            // Normalize direction vector
+            const normalizedVector = {
+                x: directionVector.x / Math.sqrt(directionVector.x * directionVector.x + directionVector.y * directionVector.y),
+                y: directionVector.y / Math.sqrt(directionVector.x * directionVector.x + directionVector.y * directionVector.y),
+            };
+
+            // Calculate offset points for each original point
+            points.forEach(point => {
+                const offsetX = normalizedVector.x * distance;
+                const offsetY = normalizedVector.y * distance;
+                offsetPoints.push({ x: point.x - offsetX, y: point.y - offsetY });
+                offsetPoints.push({ x: point.x + offsetX, y: point.y + offsetY });
+            });
+
+            return offsetPoints;
+        }
+
+        // Define margins and chart dimensions
+        const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+        const width = 600 - margin.left - margin.right;
+        const height = 300 - margin.top - margin.bottom;
+
+        // Define SVG element and chart area
+        const svg = d3.select("#chart")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+        // Define line generator
+        const lineGenerator = d3.line()
+            .x(d => d.x)
+            .y(d => d.y);
+
+        // Calculate offset points for three parallel lines
+        const offsetPoints = calculateOffsetPoints(points, 10);
+
+        // Define three line data sets
+        const lineData1 = offsetPoints.slice(0, points.length);
+        const lineData2 = offsetPoints.slice(points.length, 2 * points.length);
+        const lineData3 = offsetPoints.slice(2 * points.length);
+
+        // Generate and draw lines
+        svg.append("path")
+            .datum(lineData1)
+            .attr("d", lineGenerator)
+            .attr("fill", "none")
+            .attr("stroke", "blue");
+
+        svg.append("path")
+            .datum(lineData2)
+            .attr("d", lineGenerator)
+            .attr("fill", "none")
+            .attr("stroke", "red");
+
+        svg.append("path")
+            .datum(lineData3)
+            .attr("d", lineGenerator)
+            .attr("fill", "none")
+            .attr("stroke", "green");
+    </script>
+</body>
+</html>
