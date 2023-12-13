@@ -24,5 +24,6 @@ https://github.com/gniziemazity/drawing-data
 #### ML Phases
 https://github.com/gniziemazity/neural-network  
 This is phase 2, where we increase the accuracy of the method we developed in Phase 1. We do this by implementing more sophisticated features and using other classification methods (like the Neural Network). In Phase 2 we also learn about Data Cleaning, Confusion Matrices, Geometry and the difference between Vector and Raster data (pixels).  
-https://github.com/gniziemazity/ml-course-phase-2  
+https://github.com/gniziemazity/ml-course-phase-2
+
 🫠🫠🫠🫠🫠🫠🫠🫠🫠🫠🙃🙃🙃🙃🙃🙃🙃🙃🙃  😴😴😴😴😴😴😴😴😴
